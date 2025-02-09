@@ -48,27 +48,3 @@ vector_search = MongoDBAtlasVectorSearch.from_documents(
   index_name=os.environ['MONGODB_VECTOR_INDEX'])
   # We also specify the name of the vector index (here, vector_index) 
   # within the collection which will be used for the semantic search
-
-# Perform a similarity search on the ingested documents
-prompt='What is the best horror movie to watch?'
-docs_with_score = vector_search.similarity_search_with_score(query=prompt,k=1)
-
-llm = ChatOpenAI(openai_api_key=os.environ['OPENAI_API_KEY'])
-
-prompt_template = ChatPromptTemplate.from_messages([
-    ("system", "You are a movie recommendation engine which posts a concise and short summary on relevant movies."),
-    ("user", "List of movies: {input}")
-])
-
-# Create an LLMChain
-chain = LLMChain(
-    llm=llm,
-    prompt=prompt_template
-)
-
-# Prepare the input for the chat model
-input_docs = "\n".join([doc.page_content for doc, _ in docs_with_score])
-
-# Invoke the chain with the input documents
-response = chain.invoke({"input": input_docs})
-print(response['text'])
