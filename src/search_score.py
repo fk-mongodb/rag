@@ -19,7 +19,7 @@ MONGODB_COLLECTION = client[DB_NAME][COLLECTION_NAME]
 
 vector_store = MongoDBAtlasVectorSearch(
     collection=MONGODB_COLLECTION,
-    embedding=OpenAIEmbeddings(openai_api_key=os.environ['OPENAI_API_KEY']),
+    embedding=OpenAIEmbeddings(model="text-embedding-3-large", openai_api_key=os.environ['OPENAI_API_KEY']),
     index_name=os.environ['MONGODB_VECTOR_INDEX'],
     relevance_score_fn="cosine",
 )
