@@ -1,0 +1,7 @@
+llama_index
+pymongo
+openai
+langchain
+python_dotenv
+motor
+langchain-community
